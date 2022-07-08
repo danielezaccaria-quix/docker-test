@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      context: . #vado a cercare dentro la cartella attuale
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - app/node_modules #non voglio che questa cartella venga mappata all'interno del mio container
+      - .:/app #la directory attuale verrà mappata all'iterno del container nel percorso /app
+  tests:
+    build:
+      context: . #vado a cercare dentro la cartella attuale
+      dockerfile: Dockerfile.dev
+    volumes:
+      - app/node_modules #non voglio che questa cartella venga mappata all'interno del mio container
+      - .:/app #la directory attuale verrà mappata all'iterno del container nel percorso /app
+    command: ["npm", "run", "test"] #overriding del comando presente nel Dockerfile
